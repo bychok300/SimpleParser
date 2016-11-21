@@ -5,8 +5,8 @@
         This is a simple web application that parse some URL.
     </description>
   <servlet>
-    <servlet-name>Servlet1</servlet-name>
-    <servlet-class>com.counter.Servlet1</servlet-class>
+    <servlet-name>Parse</servlet-name>
+    <servlet-class>com.counter.Parse</servlet-class>
   </servlet>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
