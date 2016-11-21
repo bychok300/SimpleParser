@@ -38,7 +38,7 @@ public class Pars extends HttpServlet {
 		//подключаемся к Jsoup и парсим введеный параметр на клиенте
         try{
         	//конектимся
-            Document doc = Jsoup.connect("http://" +parserParam).get();
+            Document doc = Jsoup.connect("http://" + parserParam).get();
             //добавляем в список из элементов все что лежит между тегами <html> </html>
             List<Element> elements = doc.select("html");
            
@@ -47,7 +47,8 @@ public class Pars extends HttpServlet {
              *  иначе, выводим просто в хтмл
              * 	*/
             if (toText != null){
-            	out.print("<plaintext>" + elements + "</plainetx>");
+            	out.print("<plaintext>" +elements + "</plaintext>");
+
             }
             else{
             out.print(elements);  
