@@ -1,1 +1,1 @@
-#Simple parser it use Jsoup and got web interface
+#Simple parser using Jsoup lib
