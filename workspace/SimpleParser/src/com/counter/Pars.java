@@ -23,8 +23,9 @@ public class Pars extends HttpServlet {
        
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//ввыставляем кодировку символов
+		//ввыставляем кодировку символов и тип контента
 		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;");
 		//принимаем параметр с формы текстового поля
 		String parserParam = request.getParameter("urlParse");
 		
@@ -33,34 +34,24 @@ public class Pars extends HttpServlet {
 		
 		//берем наш checkbox
 		String toText = request.getParameter("textOrHtml");
-		/***
-		 * Если наш чекбокс не равен пустоте то выводим все с тексте
-		 * 
-		 * Иначе, все рендерим
-		 */
-		
-		if (toText != null){
-			response.setContentType("text/plain;");
-			response.setCharacterEncoding("UTF-8");
-		}
-		else {
-			response.setContentType("text/html;");
-			response.setCharacterEncoding("UTF-8");
-		}
-		
-	//подключаемся к Jsoup и парсим введеный параметр на клиенте
+	
+		//подключаемся к Jsoup и парсим введеный параметр на клиенте
         try{
         	//конектимся
             Document doc = Jsoup.connect("http://" +parserParam).get();
             //добавляем в список из элементов все что лежит между тегами <html> </html>
             List<Element> elements = doc.select("html");
-            //FileOutputStream createFile = new FileOutputStream("/home/rem0tec0de/workspace/letterCounter/src/com/counter/parsed.html");
-    		
-            //for (Element elm : elements){
-            //	createFile.write(elm);
-            //}
-            //выводим на клиента все что спарсилось	
+           
+            /***Если стоит галка - текст
+             *  выводим на клиента все что спарсилось в плэйн тексте
+             *  иначе, выводим просто в хтмл
+             * 	*/
+            if (toText != null){
+            	out.print("<plaintext>" + elements + "</plainetx>");
+            }
+            else{
             out.print(elements);  
+            }
         }
         //перехватываем исключение если че
         catch(Exception e){
@@ -73,7 +64,8 @@ public class Pars extends HttpServlet {
 	}
 	
 
-	
+	//"<link rel='stylesheet' type='text/css' href='" + request.getContextPath() +  "/css/prism.css' />"+
+	  //"<script type='javascript' src='" + request.getContextPath() +  "/js/prism.js' />"+
 	//protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 	//}
