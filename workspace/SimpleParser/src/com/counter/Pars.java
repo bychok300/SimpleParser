@@ -1,6 +1,8 @@
 package com.counter;
 
+import java.io.BufferedWriter;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -30,23 +32,28 @@ public class Pars extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;");
 		//принимаем параметр с формы текстового поля
-		String parserParam = request.getParameter("urlParse");
+		final String parserParam = request.getParameter("urlParse");
 		
 		//вызываем ответы клиенту с сервера
-		PrintWriter out = response.getWriter();
+		final PrintWriter out = response.getWriter();
 		
 		//берем наш checkbox
-		String toText = request.getParameter("textOrHtml");
-	
-		//подключаемся к Jsoup и парсим введеный параметр на клиенте
-        try{
+		final String toText = request.getParameter("textOrHtml");
+		
+		//добавляем вывод в файлик
+		final String fileName = "/home/rem0tec0de/workspace/SimpleParser/WebContent/outPutFile/output.html";
+		/***
+		 * подключаемся к Jsoup и парсим введеный параметр на клиенте
+		 * и все это выкладываем в файлик
+		 */
+		
+        try (final BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
         	//конектимся
-            Document doc = Jsoup.connect("http://" + parserParam).get();
+            final Document doc = Jsoup.connect("http://" + parserParam).get();
             //добавляем в список из элементов все что лежит между тегами <html> </html>
             List<Element> elements = doc.select("html");
-            
-            Gson gson = new GsonBuilder().create();
-            gson.toJson(elements);
+            //записываем в файлик
+            writer.write(doc.outerHtml());
             
            
             /***Если стоит галка - текст
@@ -73,10 +80,9 @@ public class Pars extends HttpServlet {
 	}
 	
 
-	//"<link rel='stylesheet' type='text/css' href='" + request.getContextPath() +  "/css/prism.css' />"+
-	  //"<script type='javascript' src='" + request.getContextPath() +  "/js/prism.js' />"+
-	//protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	//}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		super.doGet(request, response);
+	}
 
 }
