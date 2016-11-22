@@ -16,8 +16,11 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
-@WebServlet(urlPatterns = "/Servlet1", description = "Simple parser by Bychek Anton") 
+
+@WebServlet(urlPatterns = "/Parse", description = "Simple parser by Bychek Anton") 
 public class Pars extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -41,6 +44,10 @@ public class Pars extends HttpServlet {
             Document doc = Jsoup.connect("http://" + parserParam).get();
             //добавляем в список из элементов все что лежит между тегами <html> </html>
             List<Element> elements = doc.select("html");
+            
+            Gson gson = new GsonBuilder().create();
+            gson.toJson(elements);
+            
            
             /***Если стоит галка - текст
              *  выводим на клиента все что спарсилось в плэйн тексте
@@ -51,7 +58,8 @@ public class Pars extends HttpServlet {
 
             }
             else{
-            out.print(elements);  
+            	//System.out.println(jsonOut);
+            	out.print(elements);  
             }
         }
         //перехватываем исключение если че
