@@ -4,9 +4,7 @@
     android:layout_height="match_parent"
     android:weightSum="1">
 
-    <EditText android:imeOptions="actionSearch"
-        android:layout_height="50dp"
-        android:layout_width="match_parent"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
