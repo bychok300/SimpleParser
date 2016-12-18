@@ -3,16 +3,12 @@ package com.anton.src.simpleparser_android;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.inputmethod.EditorInfo;
-
 import android.widget.TextView;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-
 import java.io.IOException;
 
-import static com.anton.src.simpleparser_android.R.id.editText;
+
 
 
 /**
